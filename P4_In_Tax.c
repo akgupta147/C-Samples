@@ -1,35 +1,49 @@
-#include <stdio.h>
+#include<stdio.h>
+#include<conio.h>
 
-int main()
+int linear_search(int *arr, int size, int number)
 {
-    float income, tax, taxpercent, temp;
-    printf("# Income Tax Calculator :-\n\n");
-    printf("Enter income amount (in LPA): ");
-    scanf("%f", &income);
-    temp = income;
-    if (income < 2.5)
+    for (int i = 0; i < size; i++)
     {
-        tax = 0;
+        // printf("%d ", arr[i]);
+        if (arr[i] == number)
+        {
+            return i;
+        }
     }
-    else if (income < 5.0)
+    return -1;
+}
+
+int binary_search(int *arr, int size, int number)
+{
+    int start = 0, end = size - 1, mid = (start + end)/2;
+    if (number < arr[0] || number > arr[size - 1])
     {
-        tax = (temp - 2.5) * (0.05);
-    }
-    else if (income < 10)
-    {
-        tax = (2.5 * 0.05) + ((temp - 5) * 0.2);
-    }
-    else
-    {
-        tax = (2.5 * 0.05) + (5 * 0.2) + ((temp - 10) * 0.3);
-    }
-    if (tax < 1)
-    {
-        printf("\nFor income %f , income tax to be paid is : %f thousand rupees", income, tax * 100);
+        return -1;
     }
     else
     {
-        printf("\nFor income %f , income tax to be paid is : %f lakh rupees", income, tax);
+        while (number != arr[mid])
+        {
+            if (number < arr[mid])
+            {
+                end = mid - 1;
+            }
+            else
+            {
+                start = mid + 1;
+            }
+            mid = (start + end)/2;
+        }
+        return mid;
     }
-    return 0;
+}
+
+void main()
+{
+    int size, arr[] = { 2,3,5,7,10,14,18,21,23,27,32,38,43,50 };
+    int number = 43;
+    size = (sizeof(arr)/sizeof(int));
+    printf("It is present at index : %d", linear_search(arr, size, number));
+    printf("\nIt is present at index : %d", binary_search(arr, size, number));
 }
